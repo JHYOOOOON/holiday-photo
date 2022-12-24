@@ -24,22 +24,18 @@ function OptionBox() {
 		};
 		const canvas = await html2canvas(target, options);
 		const url = canvas.toDataURL("image/png");
-		canvas.toBlob((blob) => {
-			if (!blob) return;
-			const saveUrl = URL.createObjectURL(blob);
-			const gallery = localStorage.getItem("gallery");
-			let list;
-			if (gallery) {
-				list = JSON.parse(gallery);
-				if (list.length === 10) {
-					list.pop();
-				}
-				list.unshift(saveUrl);
-			} else {
-				list = [saveUrl];
+		const gallery = localStorage.getItem("gallery");
+		let list;
+		if (gallery) {
+			list = JSON.parse(gallery);
+			if (list.length === 10) {
+				list.pop();
 			}
-			localStorage.setItem("gallery", JSON.stringify(list));
-		});
+			list.unshift(url);
+		} else {
+			list = [url];
+		}
+		localStorage.setItem("gallery", JSON.stringify(list));
 		downloadImage(url);
 	};
 
