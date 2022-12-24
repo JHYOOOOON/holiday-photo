@@ -19,6 +19,7 @@ const StyledApp = styled.div`
 	position: fixed;
 	width: 100%;
 	height: 100%;
+	overflow: auto;
 	background-color: #333;
 
 	a {
