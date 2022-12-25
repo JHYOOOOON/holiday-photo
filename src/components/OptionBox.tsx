@@ -28,7 +28,7 @@ function OptionBox() {
 		let list;
 		if (gallery) {
 			list = JSON.parse(gallery);
-			if (list.length === 10) {
+			if (list.length === 8) {
 				list.pop();
 			}
 			list.unshift(url);
