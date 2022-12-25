@@ -16,7 +16,7 @@ function Main() {
 				<Link to="/takephoto">
 					<Card>
 						<ImageWrapper>
-							<img src={cameraImage} />
+							<img src={cameraImage} alt="카메라" />
 						</ImageWrapper>
 						<CardTitle>사진 촬영</CardTitle>
 					</Card>
@@ -24,7 +24,7 @@ function Main() {
 				<Link to="/photobook">
 					<Card>
 						<ImageWrapper>
-							<img src={photobookImage} />
+							<img src={photobookImage} alt="사진첩" />
 						</ImageWrapper>
 						<CardTitle>사진첩</CardTitle>
 					</Card>

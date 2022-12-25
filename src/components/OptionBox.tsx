@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import styled, { css } from "styled-components";
 
-import { BackgroundColor, FontColor, Grayscale, ShowDate, Text } from "./Options";
+import { BackgroundColor, FontColor, ShowDate, Text } from "./Options";
 
 function OptionBox() {
 	const downloadImage = (url: string) => {

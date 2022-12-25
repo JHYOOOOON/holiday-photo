@@ -25,7 +25,7 @@ function PhotoBook() {
 				falsy={
 					<PhotoWrapper>
 						{gallery.map((url) => (
-							<img src={url} />
+							<img src={url} alt="갤러리 이미지" />
 						))}
 					</PhotoWrapper>
 				}
@@ -63,7 +63,6 @@ const Title = styled.h1`
 
 const Description = styled.p`
 	margin-top: 5px;
-
 	color: #fff;
 `;
 
