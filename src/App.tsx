@@ -9,6 +9,9 @@ function App() {
 			<Reset />
 			<Router />
 			<Snowfall />
+			<Snow>
+				<StackedSnow />
+			</Snow>
 		</StyledApp>
 	);
 }
@@ -20,9 +23,26 @@ const StyledApp = styled.div`
 	width: 100%;
 	height: 100%;
 	overflow: auto;
-	background-color: #333;
+	background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+	filter: drop-shadow(0 0 10px white);
+`;
 
-	a {
-		text-decoration: none;
-	}
+const Snow = styled.div`
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 170px;
+	overflow: hidden;
+`;
+
+const StackedSnow = styled.div`
+	position: absolute;
+	top: 120px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #ffffff;
+	transform: scale(1.2);
+	filter: blur(20px);
 `;
