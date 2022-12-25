@@ -34,6 +34,7 @@ const Snow = styled.div`
 	width: 100%;
 	height: 170px;
 	overflow: hidden;
+	z-index: -9;
 `;
 
 const StackedSnow = styled.div`

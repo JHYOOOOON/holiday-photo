@@ -82,8 +82,9 @@ function PhotoBox() {
 			setPhotoUrl(url);
 		});
 
-		window.scrollTo(0, window.innerHeight);
+		window.location.href = "#photo-result";
 	};
+
 	return (
 		<Wrapper id="photo-box">
 			<TitleWrapper>
@@ -98,11 +99,9 @@ function PhotoBox() {
 				)}
 				<StyledVideo ref={videoRef} autoPlay playsInline muted />
 			</VideoWrapper>
-			<a href="#photo-result">
-				<Button onClick={takePhoto} disabled={isGranted === false}>
-					사진 찍기
-				</Button>
-			</a>
+			<Button onClick={takePhoto} disabled={isGranted === false}>
+				사진 찍기
+			</Button>
 		</Wrapper>
 	);
 }
