@@ -21,7 +21,7 @@ function PhotoBook() {
 			</TitleWrapper>
 			<Maybe
 				test={gallery.length === 0}
-				truthy={<div>저장된 사진이 없습니다.</div>}
+				truthy={<NoPhoto>저장된 사진이 없습니다.</NoPhoto>}
 				falsy={
 					<PhotoWrapper>
 						{gallery.map((url) => (
@@ -65,6 +65,14 @@ const Description = styled.p`
 	margin-top: 5px;
 
 	color: #fff;
+`;
+
+const NoPhoto = styled.div`
+	width: 100%;
+	padding: 20px 15px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-sizing: border-box;
 `;
 
 const PhotoWrapper = styled.ul`
