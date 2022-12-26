@@ -3,6 +3,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import { withPhotoUrl } from "../recoil";
+import { Device } from "../lib";
 
 function PhotoBox() {
 	const [stream, setStream] = useState<MediaStream | null>(null);
@@ -10,37 +11,28 @@ function PhotoBox() {
 	const setPhotoUrl = useSetRecoilState(withPhotoUrl);
 	const videoRef = useRef<HTMLVideoElement | null>(null);
 
-	useEffect(() => {
-		const getCameraPermission = async () => {
-			//@ts-ignore
-			const { state } = await navigator.permissions.query({ name: "camera" });
-			setIsGranted(state === "granted");
-			return state;
+	const updateStream = async (deviceId: string) => {
+		const constraints = {
+			video: {
+				deviceId,
+				width: 1280,
+				height: 720,
+			},
 		};
+		const newStream = await navigator.mediaDevices.getUserMedia(constraints);
+		setStream(newStream);
+	};
 
+	useEffect(() => {
 		(async () => {
-			const devices = await navigator.mediaDevices.enumerateDevices();
-			const videoDevices = devices.filter((item) => item.kind === "videoinput");
-
+			await Device.instance.initialize();
+			const videoDevices = Device.instance.videoList;
 			if (videoDevices.length > 0) {
-				const stateForCheckPermission = await getCameraPermission();
-				if (stateForCheckPermission === "prompt") {
-					/* check permissions */
+				if (Device.instance.cameraPermission === "prompt") {
 					await navigator.mediaDevices.getUserMedia({ video: true });
 				}
-
-				const stateForGetVideoSource = await getCameraPermission();
-				if (stateForGetVideoSource === "granted") {
-					const constraints = {
-						video: {
-							deviceId: videoDevices[0].deviceId,
-							width: 1280,
-							height: 720,
-						},
-					};
-					const newStream = await navigator.mediaDevices.getUserMedia(constraints);
-					setStream(newStream);
-				}
+				if (Device.instance.cameraPermission !== "granted") return;
+				updateStream(videoDevices[0].deviceId);
 			} else {
 				alert("⛄️ 카메라 장치를 연결 후, 새로고침 해주세요");
 			}
@@ -51,6 +43,10 @@ function PhotoBox() {
 		if (!stream || !videoRef.current) return;
 		videoRef.current.srcObject = stream;
 	}, [stream]);
+
+	useEffect(() => {
+		setIsGranted(Device.instance.cameraPermission === "granted");
+	}, [Device.instance.cameraPermission]);
 
 	const takePhoto = async () => {
 		if (!videoRef.current) return;
@@ -139,7 +135,7 @@ const Description = styled.p`
 
 const VideoWrapper = styled.div`
 	position: relative;
-	width: 700px;
+	width: 100%;
 	height: 390px;
 `;
 
@@ -148,6 +144,7 @@ const NoPermission = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
+	max-width: 700px;
 	height: 100%;
 	background-color: #fff;
 	font-size: 18px;
@@ -157,7 +154,6 @@ const NoPermission = styled.div`
 `;
 
 const StyledVideo = styled.video`
-	width: 100%;
 	height: 100%;
 	transform: rotateY(180deg);
 `;
